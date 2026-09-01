@@ -1,0 +1,8 @@
+venv/
+__pycache__/
+*.pyc
+chroma_db/
+.env
+youtube_audio/
+*.pdf
+.DS_Store
