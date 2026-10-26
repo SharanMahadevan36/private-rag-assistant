@@ -1,57 +1,92 @@
 # 🔒 Private RAG Assistant
 
-A fully local, privacy-first Retrieval-Augmented Generation (RAG) assistant for querying PDF documents and YouTube transcripts — without sending any data to external cloud APIs.
+A fully local, privacy-first Retrieval-Augmented Generation (RAG) assistant for querying PDF documents using natural language — without sending document data to external cloud APIs.
 
 ## 🎯 What It Does
 
-Upload one or more PDFs (research papers, notes, study material) and/or a YouTube video link, then ask natural-language questions about that content. The assistant answers strictly from the provided documents, with source citations for every answer — all running entirely on your own machine.
+Upload one or more PDFs (research papers, notes, technical documentation, or study material) and ask natural-language questions about their content. The assistant retrieves relevant passages and generates answers grounded in the provided documents, with source citations to help you verify the information.
+
+The application uses a locally running language model and local embeddings to provide a private document question-answering experience.
 
 ## 🤔 Why This Project
 
-Researchers, students, and professionals often can't paste confidential documents into tools like ChatGPT or Claude, since that data leaves their control and goes to an external server. This project solves that — the data never leaves your device, at any point in the pipeline.
+Researchers, students, and professionals often work with confidential documents that they may not want to upload to cloud-based AI services.
+
+This project demonstrates how Retrieval-Augmented Generation (RAG) can be used to build a document assistant that processes PDFs, retrieves relevant information, and generates answers locally, helping keep sensitive document data under the user's control.
 
 ## 🏗️ Architecture
 
-User uploads PDF/YouTube → Chunking → Embeddings → Vector DB (Chroma) → Question → Retrieval (top-k matching chunks) → LLM (Ollama/Llama 3.2) → Answer
+PDF Upload → Text Extraction → Text Chunking → Local Embeddings → Vector Database (ChromaDB) → Semantic Retrieval (Top-K Chunks) → LLM (Ollama / Llama 3.2) → Answer with Source Citations
 
 ## ⚙️ Tech Stack
 
 | Component | Technology |
 |---|---|
-| LLM | Ollama running Llama 3.2 (1B) — fully local |
-| Embeddings | HuggingFace all-MiniLM-L6-v2 — local, no API |
+| Language Model | Ollama — Llama 3.2 (1B) |
+| Embeddings | HuggingFace — all-MiniLM-L6-v2 |
 | Vector Store | ChromaDB |
 | Orchestration | LangChain |
-| PDF Loading | PyPDFLoader (supports multiple files) |
-| YouTube Loading | YoutubeLoader (native captions) |
-| UI | Streamlit |
+| PDF Processing | PyPDFLoader |
+| User Interface | Streamlit |
+| Programming Language | Python |
 
 ## 🚀 How to Run Locally
 
-1. Clone this repo: git clone https://github.com/SharanMahadevan36/private-rag-assistant.git then cd private-rag-assistant
+### Prerequisites
 
-2. Create and activate a virtual environment: python -m venv venv then venv\Scripts\activate
+- Python installed on your machine
+- Ollama installed and running
+- Sufficient system resources to run the selected language model
 
-3. Install dependencies: pip install -r requirements.txt
+### Installation
 
-4. Install Ollama from ollama.com and pull the model: ollama pull llama3.2:1b
+1. Clone the repository:
 
-5. Run the app: streamlit run app.py
+   `git clone https://github.com/SharanMahadevan36/private-rag-assistant.git`
+
+2. Navigate to the project directory:
+
+   `cd private-rag-assistant`
+
+3. Create a virtual environment:
+
+   `python -m venv venv`
+
+4. Activate the virtual environment.
+
+   **Windows:**
+
+   `venv\Scripts\activate`
+
+   **macOS / Linux:**
+
+   `source venv/bin/activate`
+
+5. Install the dependencies:
+
+   `pip install -r requirements.txt`
+
+6. Download the language model:
+
+   `ollama pull llama3.2:1b`
+
+7. Start the application:
+
+   `streamlit run app.py`
 
 ## 💡 Key Engineering Decisions
 
-- Switched from Whisper-based audio transcription to YouTube's native captions — Whisper transcription was too slow on CPU-only hardware; captions load in seconds and cover most educational content.
-- Chose Llama 3.2 (1B) over larger models — significantly faster inference on CPU with minimal RAM usage, while still producing accurate answers when grounded in retrieved context.
-- Source citations for every answer — each response shows exactly which document chunk it came from, so answers are verifiable rather than a black box.
-- Multi-PDF support — users can upload and query across several documents at once, all indexed into a single vector store.
-
+- **Local-first AI:** Uses Ollama for local language-model inference, reducing reliance on external AI APIs.
+- **Lightweight language model:** Selected Llama 3.2 (1B) to make local inference more practical on resource-constrained hardware.
+- **Source-grounded answers:** Retrieves relevant document passages to help ground responses in the provided content.
+- **Source citations:** Provides source references to make answers easier to verify.
+- **Multi-PDF support:** Allows users to upload and query multiple PDF documents using a shared vector store.
+- **Semantic search:** Uses local embeddings to find relevant passages based on the meaning of a question.
 
 ## 📸 Demo
 
 ![Private RAG Assistant Demo](private-rag-assistant-demo.gif)
 
-
-
 ## 📄 License
 
-MIT
+MIT License
