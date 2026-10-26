@@ -45,9 +45,11 @@ User uploads PDF/YouTube → Chunking → Embeddings → Vector DB (Chroma) → 
 - Source citations for every answer — each response shows exactly which document chunk it came from, so answers are verifiable rather than a black box.
 - Multi-PDF support — users can upload and query across several documents at once, all indexed into a single vector store.
 
+
 ## 📸 Demo
 
-(private-rag-assistant-demo.gif)
+!(private-rag-assistant-demo.gif)
+
 
 ## 📄 License
 
