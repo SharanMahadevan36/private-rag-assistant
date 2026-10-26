@@ -47,7 +47,7 @@ User uploads PDF/YouTube → Chunking → Embeddings → Vector DB (Chroma) → 
 
 ## 📸 Demo
 
-private-rag-assistant.gif
+private-rag-assistant-demo.gif
 
 ## 📄 License
 
